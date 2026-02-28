@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shivam Garg | Influencer Marketing & Creator Management</title>
+  <meta name="description" content="Premium influencer marketing and creator management agency website for Shivam Garg: brand collaborations, creator growth, paid campaigns, and performance reporting." />
+  <style>
+    :root {
+      --bg: #f6f2ea;
+      --bg-soft: #fffdf8;
+      --panel: rgba(255, 255, 255, 0.78);
+      --panel-strong: rgba(255, 255, 255, 0.92);
+      --text: #1b1a18;
+      --muted: #64605a;
+      --line: rgba(27, 26, 24, 0.12);
+      --brand: #26221c;
+      --accent: #b38b59;
+      --accent-soft: rgba(179, 139, 89, 0.17);
+      --shadow-lg: 0 30px 80px rgba(39, 33, 26, 0.12);
+      --shadow-md: 0 18px 35px rgba(38, 34, 28, 0.08);
+      --radius-xl: 30px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --container: min(1220px, 92vw);
+    }
+
+    html[data-theme="dark"] {
+      --bg: #12110f;
+      --bg-soft: #171613;
+      --panel: rgba(32, 30, 27, 0.78);
+      --panel-strong: rgba(36, 33, 29, 0.9);
+      --text: #f5f2ec;
+      --muted: #b8b0a6;
+      --line: rgba(245, 242, 236, 0.12);
+      --brand: #f0ece5;
+      --accent: #d3a66f;
+      --accent-soft: rgba(211, 166, 111, 0.2);
+      --shadow-lg: 0 36px 90px rgba(0, 0, 0, 0.38);
+      --shadow-md: 0 20px 40px rgba(0, 0, 0, 0.34);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      text-rendering: geometricPrecision;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% -10%, rgba(179, 139, 89, 0.17), transparent 40%),
+        radial-gradient(circle at 100% 20%, rgba(179, 139, 89, 0.09), transparent 46%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 75%, var(--bg) 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container { width: var(--container); margin-inline: auto; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px) scale(0.99);
+      transition: opacity 700ms ease, transform 800ms cubic-bezier(.16,.84,.44,1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .site-header {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: var(--container);
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .nav-wrap {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0 1.2rem 0 1.6rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), #e4c69f);
+      box-shadow: 0 0 0 8px var(--accent-soft);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      color: var(--muted);
+      padding: 0.35rem 0.5rem;
+      border-radius: 8px;
+      transition: color .3s ease, background-color .3s ease;
+    }
+
+    .nav-links a:hover { color: var(--text); background: var(--accent-soft); }
+
+    .nav-actions { display: flex; align-items: center; gap: 0.7rem; }
+
+    .btn {
+      border: 1px solid var(--line);
+      background: var(--panel-strong);
+      color: var(--text);
+      padding: 0.68rem 1rem;
+      font-weight: 600;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.05);
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: linear-gradient(130deg, var(--brand), #4a4135);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 18px 30px rgba(36,30,24,0.25);
+    }
+
+    .theme-toggle { width: 40px; height: 40px; padding: 0; border-radius: 50%; display: grid; place-items: center; }
+
+    main { position: relative; }
+
+    .hero {
+      padding-top: 9.8rem;
+      padding-bottom: 4.6rem;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .parallax {
+      position: absolute;
+      inset: auto;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+      filter: blur(1px);
+    }
+
+    .orb-1 { width: 280px; height: 280px; top: 8%; left: -80px; background: radial-gradient(circle, rgba(179,139,89,.25), transparent 65%); }
+    .orb-2 { width: 340px; height: 340px; top: 44%; right: -120px; background: radial-gradient(circle, rgba(142,120,91,.2), transparent 66%); }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: var(--muted);
+      font-size: .75rem;
+      margin-bottom: 1.2rem;
+      font-weight: 600;
+    }
+
+    h1, h2, h3 { margin: 0; line-height: 1.1; }
+
+    h1 {
+      font-size: clamp(2.2rem, 6vw, 5.2rem);
+      max-width: 15ch;
+      letter-spacing: -0.025em;
+      font-weight: 750;
+    }
+
+    .hero p.lead {
+      margin-top: 1.25rem;
+      color: var(--muted);
+      max-width: 62ch;
+      font-size: 1.06rem;
+    }
+
+    .hero-actions { margin-top: 2rem; display: flex; gap: .8rem; flex-wrap: wrap; }
+
+    .meta-row {
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: .9rem;
+    }
+
+    .mini-stat {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--panel);
+      padding: .9rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .mini-stat strong { font-size: 1.15rem; display: block; }
+    .mini-stat span { color: var(--muted); font-size: .85rem; }
+
+    .floating-scene {
+      position: relative;
+      min-height: 510px;
+      perspective: 1200px;
+    }
+
+    .float-card {
+      position: absolute;
+      border-radius: var(--radius-lg);
+      background: var(--panel-strong);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-lg);
+      padding: 1rem 1.1rem;
+      transform-style: preserve-3d;
+      transition: transform .35s ease;
+    }
+
+    .float-card h3 { font-size: 1.04rem; margin-bottom: .55rem; }
+    .float-card p { margin: 0; color: var(--muted); font-size: .92rem; }
+
+    .f1 { width: 68%; top: 12%; left: 14%; }
+    .f2 { width: 54%; top: 44%; left: 0; }
+    .f3 { width: 53%; top: 62%; right: 1%; }
+
+    .section {
+      padding: 4.8rem 0;
+      position: relative;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.7rem);
+      letter-spacing: -0.02em;
+    }
+
+    .section-top {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.7rem;
+    }
+
+    .section-top p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 62ch;
+    }
+
+    .glass {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-md);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .about-card { padding: 1.3rem 1.3rem; }
+    .about-card p { margin: 0; color: var(--muted); }
+
+    .services-grid,
+    .creators-grid,
+    .brands-grid,
+    .contact-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .services-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .creators-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .brands-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .contact-grid { grid-template-columns: 1.1fr .9fr; }
+
+    .service,
+    .creator,
+    .brand,
+    .contact-card,
+    .join-card { padding: 1.1rem; }
+
+    .service h3,
+    .creator h3,
+    .contact-card h3,
+    .join-card h3 { font-size: 1.06rem; margin-bottom: .45rem; }
+
+    .service p,
+    .creator p,
+    .contact-card p,
+    .join-card p,
+    .brand p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .93rem;
+    }
+
+    .chips { margin-top: .8rem; display: flex; flex-wrap: wrap; gap: .45rem; }
+
+    .chip {
+      background: var(--accent-soft);
+      color: var(--text);
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: .3rem .55rem;
+      font-size: .76rem;
+      font-weight: 600;
+    }
+
+    .brand {
+      min-height: 120px;
+      display: grid;
+      align-content: space-between;
+    }
+
+    .brand-mark {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: .02em;
+    }
+
+    .join-wrap {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .contact-link {
+      margin-top: .8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      font-weight: 600;
+      padding: .55rem .7rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--panel-strong);
+    }
+
+    .site-footer {
+      padding: 2.4rem 0 2.8rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-wrap {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .tilt {
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform 160ms linear;
+    }
+
+    @media (max-width: 1080px) {
+      .nav-links { display: none; }
+      .hero-grid,
+      .about-grid,
+      .services-grid,
+      .creators-grid,
+      .brands-grid,
+      .contact-grid,
+      .join-wrap { grid-template-columns: 1fr 1fr; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .floating-scene { min-height: 420px; margin-top: 1rem; }
+      .f1 { left: 5%; width: 70%; }
+      .f2 { left: 2%; }
+      .f3 { right: 4%; }
+    }
+
+    @media (max-width: 740px) {
+      .site-header { top: 10px; }
+      .nav-wrap { min-height: 64px; padding: 0 .8rem 0 1rem; }
+      .btn { padding: .6rem .85rem; font-size: .88rem; }
+      .hero { padding-top: 7.8rem; }
+      .meta-row,
+      .about-grid,
+      .services-grid,
+      .creators-grid,
+      .brands-grid,
+      .contact-grid,
+      .join-wrap { grid-template-columns: 1fr; }
+      .section { padding: 3.8rem 0; }
+      .floating-scene { min-height: 360px; }
+      .f1, .f2, .f3 { position: static; width: 100%; margin-bottom: .8rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { animation-duration: 1ms !important; transition-duration: 1ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" aria-label="Website header">
+    <div class="nav-wrap">
+      <a href="#home" class="brand" aria-label="Home">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span>Myviralreach</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#creators">Creators</a>
+        <a href="#brands">Brand Collaborations</a>
+        <a href="#join">Join as Creator</a>
+        <a href="#support">Support</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="btn theme-toggle" id="themeToggle" aria-label="Toggle dark and light mode">◐</button>
+        <a class="btn btn-primary" href="#support">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="parallax orb-1" data-speed="0.12"></div>
+      <div class="parallax orb-2" data-speed="0.18"></div>
+      <div class="container hero-grid">
+        <div class="reveal">
+          <p class="eyebrow">Influencer Marketing & Creator Management Agency</p>
+          <h1>Premium creator partnerships that move brands from visibility to measurable growth.</h1>
+          <p class="lead">
+            I build strategic influencer ecosystems for campaigns that feel authentic, perform at scale, and convert consistently across Instagram, Reels, and YouTube.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#services">Explore Services</a>
+            <a class="btn" href="#join">Join as Creator</a>
+          </div>
+          <div class="meta-row">
+            <article class="mini-stat tilt" data-tilt>
+              <strong>Creator-first</strong>
+              <span>Partnership models designed for long-term value.</span>
+            </article>
+            <article class="mini-stat tilt" data-tilt>
+              <strong>Conversion-led</strong>
+              <span>Campaign decisions informed by outcomes, not vanity metrics.</span>
+            </article>
+            <article class="mini-stat tilt" data-tilt>
+              <strong>India network</strong>
+              <span>Growing reach across multiple creator categories.</span>
+            </article>
+          </div>
+        </div>
+
+        <div class="floating-scene reveal">
+          <article class="float-card f1 tilt" data-tilt>
+            <h3>Campaign Direction</h3>
+            <p>Creative mapping, platform strategy, and audience-fit creator matchmaking for premium campaign execution.</p>
+          </article>
+          <article class="float-card f2 tilt" data-tilt>
+            <h3>Deal & Negotiation</h3>
+            <p>Transparent pricing guidance and structured negotiation to protect both brands and creators.</p>
+          </article>
+          <article class="float-card f3 tilt" data-tilt>
+            <h3>Performance Loop</h3>
+            <p>Post-campaign analytics and reporting frameworks that help scale winning collaboration patterns.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-top reveal">
+          <h2 class="section-title">About Me</h2>
+          <p>Professional profile and approach.</p>
+        </div>
+        <div class="about-grid">
+          <article class="about-card glass reveal tilt" data-tilt>
+            <h3>Shivam Garg</h3>
+            <p><strong>Role:</strong> Influencer Marketing Agent | Creator Manager | Brand Collaboration Partner</p>
+          </article>
+          <article class="about-card glass reveal">
+            <p>
+              I am a professional Influencer Marketing Agent working with a growing network of Instagram, Reels and YouTube creators across India. I help brands connect with the right creators to generate real engagement, reach and conversions through paid influencer campaigns.
+            </p>
+            <br />
+            <p>
+              I also manage creators by handling brand pitching, deal negotiation, pricing guidance, campaign coordination and post-campaign reporting, making collaborations smooth and profitable for both brands and influencers.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-top reveal">
+          <h2 class="section-title">Services</h2>
+          <p>Structured, premium campaign support for both brands and creators.</p>
+        </div>
+        <div class="services-grid">
+          <article class="service glass reveal tilt" data-tilt>
+            <h3>Influencer marketing & brand collaborations</h3>
+            <p>Strategic creator partnerships that match audience profile, brand tone, and campaign objectives.</p>
+          </article>
+          <article class="service glass reveal tilt" data-tilt>
+            <h3>Paid promotional campaigns</h3>
+            <p>End-to-end management for paid brand promotions with negotiation, execution, and quality checks.</p>
+          </article>
+          <article class="service glass reveal tilt" data-tilt>
+            <h3>Reels & short-form video campaigns</h3>
+            <p>Performance-focused formats for high engagement and retention on modern content platforms.</p>
+          </article>
+          <article class="service glass reveal tilt" data-tilt>
+            <h3>Creator management</h3>
+            <p>Professional support that helps creators build sustainable income and better brand relationships.</p>
+          </article>
+          <article class="service glass reveal tilt" data-tilt>
+            <h3>Brand pitching & deal negotiation</h3>
+            <p>Pitching systems and negotiation frameworks to secure stronger opportunities and fair outcomes.</p>
+          </article>
+          <article class="service glass reveal tilt" data-tilt>
+            <h3>Campaign coordination + performance tracking & reporting</h3>
+            <p>Communication workflows, deliverable tracking, and post-campaign reporting for strategic improvements.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="creators">
+      <div class="container">
+        <div class="section-top reveal">
+          <h2 class="section-title">Creators</h2>
+          <p>Sample creator categories for future roster expansion.</p>
+        </div>
+        <div class="creators-grid">
+          <article class="creator glass reveal tilt" data-tilt>
+            <h3>Lifestyle Creator</h3>
+            <p>Premium day-to-day storytelling, aspirational positioning, and high relatability content.</p>
+            <div class="chips"><span class="chip">Instagram</span><span class="chip">Reels</span><span class="chip">UGC</span></div>
+          </article>
+          <article class="creator glass reveal tilt" data-tilt>
+            <h3>Tech & Productivity Creator</h3>
+            <p>Product education with high intent audiences, ideal for launches and software narratives.</p>
+            <div class="chips"><span class="chip">YouTube</span><span class="chip">Reviews</span><span class="chip">Explainers</span></div>
+          </article>
+          <article class="creator glass reveal tilt" data-tilt>
+            <h3>Beauty & Fashion Creator</h3>
+            <p>Trend-driven visual campaigns that combine reach with conversion-friendly storytelling.</p>
+            <div class="chips"><span class="chip">Style</span><span class="chip">Reels</span><span class="chip">Brand Fit</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="brands">
+      <div class="container">
+        <div class="section-top reveal">
+          <h2 class="section-title">Brand Collaboration</h2>
+          <p>Collaboration model focused on clarity, quality, and scalable campaign outcomes.</p>
+        </div>
+        <div class="brands-grid">
+          <article class="brand glass reveal tilt" data-tilt>
+            <div class="brand-mark">Discovery</div>
+            <p>Objective mapping, campaign scope, audience segments, and creator selection criteria.</p>
+          </article>
+          <article class="brand glass reveal tilt" data-tilt>
+            <div class="brand-mark">Creator Match</div>
+            <p>Shortlisting creators by niche relevance, communication style, and expected conversion intent.</p>
+          </article>
+          <article class="brand glass reveal tilt" data-tilt>
+            <div class="brand-mark">Execution</div>
+            <p>Timeline coordination, approvals, publishing workflow, and campaign quality control.</p>
+          </article>
+          <article class="brand glass reveal tilt" data-tilt>
+            <div class="brand-mark">Reporting</div>
+            <p>Post-campaign metrics, learning summary, and next-phase optimization strategy.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="join">
+      <div class="container">
+        <div class="section-top reveal">
+          <h2 class="section-title">Join as Creator</h2>
+          <p>Submit your details to collaborate on upcoming paid opportunities.</p>
+        </div>
+        <div class="join-wrap">
+          <article class="join-card glass reveal">
+            <h3>Creator Onboarding</h3>
+            <p>Share your profile, niche, audience insights, and collaboration interests to join the network.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="https://forms.gle/gqeakCTjyVFMNVd47" target="_blank" rel="noopener noreferrer">Open Google Form</a>
+            </div>
+          </article>
+          <article class="join-card glass reveal tilt" data-tilt>
+            <h3>Why Join</h3>
+            <p>Professional campaign handling, transparent communication, better deal structures, and long-term creator growth support.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="support">
+      <div class="container">
+        <div class="section-top reveal">
+          <h2 class="section-title">Support / Contact</h2>
+          <p>Email-only communication for partnership requests, campaign planning, and creator support.</p>
+        </div>
+        <div class="contact-grid">
+          <article class="contact-card glass reveal">
+            <h3>Contact Shivam Garg</h3>
+            <p>For brand collaborations, creator management, or campaign planning, connect directly by email.</p>
+            <a class="contact-link" href="mailto:shivgarg597@gmail.com">shivgarg597@gmail.com</a>
+          </article>
+          <article class="contact-card glass reveal tilt" data-tilt>
+            <h3>Professional Note</h3>
+            <p>Every engagement is designed for long-term brand trust, creator profitability, and measurable campaign performance.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <span>© <span id="year"></span> Myviralreach · Shivam Garg</span>
+      <span>Influencer Marketing Agent | Creator Manager | Brand Collaboration Partner</span>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const themeToggle = document.getElementById('themeToggle');
+      const savedTheme = localStorage.getItem('myviralreach-theme');
+
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        root.setAttribute('data-theme', savedTheme);
+      }
+
+      themeToggle?.addEventListener('click', () => {
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('myviralreach-theme', next);
+      });
+
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      const reveals = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
+
+      reveals.forEach((el) => observer.observe(el));
+
+      const tiltNodes = document.querySelectorAll('[data-tilt]');
+      tiltNodes.forEach((node) => {
+        node.addEventListener('pointermove', (event) => {
+          const rect = node.getBoundingClientRect();
+          const x = event.clientX - rect.left;
+          const y = event.clientY - rect.top;
+          const px = (x / rect.width) - 0.5;
+          const py = (y / rect.height) - 0.5;
+          const rotateY = px * 8;
+          const rotateX = py * -8;
+          node.style.transform = `perspective(900px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(2px)`;
+        });
+
+        node.addEventListener('pointerleave', () => {
+          node.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+        });
+      });
+
+      const parallaxNodes = document.querySelectorAll('.parallax[data-speed]');
+      const onScroll = () => {
+        const y = window.scrollY;
+        parallaxNodes.forEach((node) => {
+          const speed = Number(node.getAttribute('data-speed')) || 0;
+          node.style.transform = `translate3d(0, ${y * speed}px, 0)`;
+        });
+      };
+
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+  </script>
+</body>
+</html>
