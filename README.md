@@ -1,43 +1,49 @@
-# MyViralReach — Influencer Marketing & Creator Partnerships
+# MyViralReach — Creator Partnership Workspace
 
-MyViralReach connects brands with creators for influencer campaigns, UGC, short-form video, creator management, and campaign coordination.
+MyViralReach is an influencer marketing workspace for managing brands, creators, outreach drafts, campaigns, follow-ups, deals and commission tracking.
 
-## Website
+## Stack
+- Next.js App Router + TypeScript
+- Supabase Auth and Postgres with per-user Row Level Security
+- Google OAuth and Gmail API for inbox search, Gmail drafts, and user-confirmed sending
+- Responsive dashboard for desktop and Android mobile browsers
 
-- Main page: `index.html`
-- Stack: HTML5, embedded CSS, and vanilla JavaScript
-- Hosting: compatible with GitHub Pages and static hosting providers
+## Features in this branch
+- Email/password sign-up, sign-in, sign-out and password-reset email
+- Overview cards for brands, creators, outreach drafts, campaigns, deals and follow-ups
+- Create, search, edit and delete brand, creator, campaign, deal, follow-up and outreach records
+- 20% default commission calculation for each deal
+- Gemini-powered personalized outreach draft generation (requires `GEMINI_API_KEY`); drafts are saved for review
+- Gmail OAuth, inbox search, Gmail draft creation and explicit confirmation before sending
+- Settings and database connectivity diagnostics
+- SQL migration with user-scoped RLS policies
 
-## Business model
+## Setup required before the app can work
+1. In Supabase SQL Editor, run `supabase/migrations/001_platform.sql`.
+2. In Vercel project settings, configure these environment variables for Production and Preview:
+   - `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY` (server-side only; never expose this key in client code)
+   - `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`
+   - `GOOGLE_REDIRECT_URI=https://myviralreach.vercel.app/api/google/callback`
+   - `TOKEN_ENCRYPTION_KEY` (exactly 64 hexadecimal characters)
+   - `APP_STATE_SECRET` (a long random secret used to validate OAuth state)
+   - `GEMINI_API_KEY` (optional, for AI-powered outreach drafting)
+3. In Google Cloud, enable the Gmail API and add the exact redirect URI above to the OAuth client. Configure the OAuth consent screen and add test users if the app remains in Testing.
+4. Redeploy after changing environment variables.
 
-MyViralReach works on a **20% commission when a deal closes**, with no retainer or upfront fee. Campaign scope, deliverables, creator availability, payment timing, usage rights, and approval terms should be agreed in writing before a campaign starts.
+Generate secrets privately in a trusted terminal, for example `openssl rand -hex 32` for the token encryption key and another independent random value for `APP_STATE_SECRET`. Never paste secrets into GitHub, public chat, or browser code. If a Google client secret was previously exposed, rotate it.
 
-## Contact
-
-- Email: shivgarg597@gmail.com
-- Website: https://myviralreach.netlify.app
-- GitHub: https://github.com/Shivamgarg581/Myviralreach
-
-## Run locally
-
-From this repository directory, run:
-
+## Local development
 ```bash
-python3 -m http.server 4173
+npm install
+cp .env.example .env.local
+npm run dev
 ```
+Fill `.env.local` with values from your own project before testing.
 
-Then visit `http://localhost:4173`.
-
-## Deploy
-
-For GitHub Pages, open **Settings → Pages**, select the `main` branch and the root folder, and save. You can also deploy this static repository using Netlify or another static hosting provider.
-
-## Repository structure
-
-```text
-.
-├── index.html
-└── README.md
-```
-
-The site styles and interactions are embedded in `index.html`, so separate legacy CSS and JavaScript files are not required.
+## Important behavior and limits
+- Sending a Gmail draft requires a deliberate click and confirmation. No automated bulk emails or follow-ups are sent.
+- AI Outreach currently generates a personalized starter draft from brand details; it does not call an external AI model.
+- Follow-ups are stored as dated reminders in the dashboard; external push/email notifications are not yet configured.
+- Before public production use, verify Supabase Auth email confirmation, Google OAuth consent/scopes, database policies and Vercel environment variables.
+- The original marketing landing page is retained as `index.html`, while the Next.js app's root route is the CRM workspace.
