@@ -37,6 +37,10 @@
     button,a{ -webkit-tap-highlight-color:transparent }
     a{color:inherit}
     .wrap{width:min(1160px,calc(100% - 40px));margin:auto}
+
+    .menu-toggle{display:none;border:1px solid var(--line);border-radius:9px;background:var(--paper);color:var(--ink);padding:9px 12px;font:800 .9rem inherit;cursor:pointer;align-items:center;gap:8px}
+    .menu-toggle:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 55%,transparent);outline-offset:3px}
+    @media(max-width:760px){.top .wrap{position:relative;flex-wrap:wrap;gap:12px}.menu-toggle{display:inline-flex}.top nav{display:none;flex:0 0 100%;flex-direction:column;align-items:stretch;gap:0;padding:8px 0 4px}.top nav.is-open{display:flex}.top nav>a{padding:13px 10px;border-top:1px solid var(--line)}.top nav>a.cta{margin-top:8px;border-top:0;text-align:center}.top{padding:13px 0}}
     .top{padding:18px 0;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(14px)}
     .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:26px}
     .brandmark{font:900 1.25rem/1 "Libre Franklin",sans-serif;letter-spacing:-.05em;text-decoration:none;white-space:nowrap}.brandmark span{color:var(--accent)}
@@ -88,7 +92,7 @@
   </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><a class="brandmark" href="#main" aria-label="MyViralReach home">MyViral<span>Reach</span></a><nav aria-label="Primary"><a href="#brands">For brands</a><a href="#creators">For creators</a><a href="#tools">Tools</a><a href="#resources">Resources</a><a href="#faq">FAQ</a><a class="cta" href="#paths">Choose your path <span aria-hidden="true">→</span></a></nav></div></header>
+<header class="top"><div class="wrap"><a class="brandmark" href="#main" aria-label="MyViralReach home">MyViral<span>Reach</span></a><button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="primaryNav"><span aria-hidden="true">☰</span><span class="menu-label">Menu</span></button><nav id="primaryNav" aria-label="Primary"><a href="#brands">For brands</a><a href="#creators">For creators</a><a href="#tools">Tools</a><a href="#resources">Resources</a><a href="#faq">FAQ</a><a class="cta" href="#paths">Choose your path <span aria-hidden="true">→</span></a></nav></div></header>
 <main id="main">
   <section class="hero"><div class="wrap hero-grid">
     <div><p class="signal">AI-powered creator partnerships, globally</p><h1>Where brands and creators <span>make the right deal.</span></h1><p class="lede">MyViralReach finds the fit, opens the conversation and coordinates the work — across niches, markets and both sides of the partnership.</p><div class="hero-actions"><a class="cta" href="#brands">I’m a Brand</a><a class="cta secondary" href="#creators">I’m a Creator</a></div><div class="proofline"><span><b>20%</b> on completed deals only</span><span><b>No</b> retainers</span><span><b>Global</b> across all niches</span></div></div>
@@ -119,6 +123,22 @@
 <footer><div class="wrap"><div class="footer-grid"><div class="footer-big">The right deal starts with a <span>better match.</span></div><div><p>Brands can build a campaign brief. Creators can build a pitch. Both can start with a clear next step.</p><p><a href="#brief">Brand brief →</a><br><a href="#tools">Creator pitch →</a><br><a href="https://www.instagram.com/myviralreach" target="_blank" rel="noopener noreferrer">Message @myviralreach on Instagram →</a><br><a href="mailto:shivgarg597@gmail.com">Email MyViralReach →</a></p></div></div><div class="legal">© 2026 MyViralReach. AI-powered creator campaign strategy, sourcing and deal coordination. Global, all niches. 20% commission on completed deals only. No retainers. Results are not guaranteed.</div></div></footer>
 <script>
 (function(){
+
+  var menuToggle=document.getElementById('menuToggle'),primaryNav=document.getElementById('primaryNav');
+  if(menuToggle&&primaryNav){
+    menuToggle.addEventListener('click',function(){
+      var open=menuToggle.getAttribute('aria-expanded')==='true';
+      menuToggle.setAttribute('aria-expanded',String(!open));
+      primaryNav.classList.toggle('is-open',!open);
+      menuToggle.querySelector('.menu-label').textContent=open?'Menu':'Close';
+      menuToggle.querySelector('[aria-hidden="true"]').textContent=open?'☰':'×';
+    });
+    primaryNav.querySelectorAll('a').forEach(function(link){link.addEventListener('click',function(){
+      if(window.matchMedia('(max-width:760px)').matches){menuToggle.setAttribute('aria-expanded','false');primaryNav.classList.remove('is-open');menuToggle.querySelector('.menu-label').textContent='Menu';menuToggle.querySelector('[aria-hidden="true"]').textContent='☰'}
+    })});
+    document.addEventListener('keydown',function(event){if(event.key==='Escape'){menuToggle.setAttribute('aria-expanded','false');primaryNav.classList.remove('is-open');menuToggle.querySelector('.menu-label').textContent='Menu';menuToggle.querySelector('[aria-hidden="true"]').textContent='☰'}});
+  }
+
   var creators=document.getElementById('dealCount'),fee=document.getElementById('fee'),extras=document.getElementById('extras');
   var money=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
   function updateCalc(){var c=+creators.value,f=+fee.value,e=+extras.value,ct=c*f,com=ct*.2;document.getElementById('creatorsOut').textContent=c;document.getElementById('feeOut').textContent=money.format(f);document.getElementById('extrasOut').textContent=money.format(e);document.getElementById('creatorTotal').textContent=money.format(ct);document.getElementById('commission').textContent=money.format(com);document.getElementById('extrasTotal').textContent=money.format(e);document.getElementById('grandTotal').textContent=money.format(ct+com+e)}
