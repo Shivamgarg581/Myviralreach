@@ -13,7 +13,7 @@ MyViralReach is an influencer marketing workspace for managing brands, creators,
 - Overview cards for brands, creators, outreach drafts, campaigns, deals and follow-ups
 - Create, search, edit and delete brand, creator, campaign, deal, follow-up and outreach records
 - 20% default commission calculation for each deal
-- Personalized outreach draft starter; drafts are saved for review
+- Gemini-powered personalized outreach draft generation (requires `GEMINI_API_KEY`); drafts are saved for review
 - Gmail OAuth, inbox search, Gmail draft creation and explicit confirmation before sending
 - Settings and database connectivity diagnostics
 - SQL migration with user-scoped RLS policies
@@ -27,6 +27,7 @@ MyViralReach is an influencer marketing workspace for managing brands, creators,
    - `GOOGLE_REDIRECT_URI=https://myviralreach.vercel.app/api/google/callback`
    - `TOKEN_ENCRYPTION_KEY` (exactly 64 hexadecimal characters)
    - `APP_STATE_SECRET` (a long random secret used to validate OAuth state)
+   - `GEMINI_API_KEY` (optional, for AI-powered outreach drafting)
 3. In Google Cloud, enable the Gmail API and add the exact redirect URI above to the OAuth client. Configure the OAuth consent screen and add test users if the app remains in Testing.
 4. Redeploy after changing environment variables.
 
