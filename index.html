@@ -153,19 +153,9 @@
   function showEmailFallback(){status.classList.remove('success');status.textContent='Email delivery could not be confirmed. ';var link=document.createElement('a');link.textContent='Open your email app instead.';link.href='mailto:shivgarg597@gmail.com?subject='+encodeURIComponent('New campaign brief for MyViralReach')+'&body='+encodeURIComponent(briefText());status.appendChild(link)}
 
   form.addEventListener('submit',function(event){
-    event.preventDefault();
-    if(!valid())return;
-    if(document.getElementById('website').value){showStatus('Thanks — your brief has been received.',true);form.reset();return}
-    setSending(true);showStatus('Sending your brief securely…',false);
-    var payload={
-      name:get('name'),email:get('email'),_replyto:get('email'),brand:get('brand'),market:get('market'),goal:get('goal'),budget:get('budget'),audience:get('audience'),deliverables:get('deliverables'),
-      _subject:'New MyViralReach campaign brief — '+get('brand'),_template:'table',_captcha:'false'
-    };
-    fetch('https://formsubmit.co/ajax/shivgarg597@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)})
-      .then(function(response){if(!response.ok)throw new Error('Delivery request failed');return response.json()})
-      .then(function(data){if(!(data&&((data.success===true)||(data.success==='true'))))throw new Error('Delivery was not confirmed');showStatus('Submission accepted by the email service. Check your inbox for a reply from MyViralReach.',true);form.reset()})
-      .catch(function(){showEmailFallback()})
-      .then(function(){setSending(false)});
+    if(!valid()){event.preventDefault();return;}
+    if(document.getElementById('website').value){event.preventDefault();showStatus('Please leave the hidden spam-check field empty.',false);return;}
+    setSending(true);
   });
   document.getElementById('copyBrief').addEventListener('click',function(){if(!valid())return;navigator.clipboard.writeText(briefText()).then(function(){showStatus('Brief copied — ready to paste into email or DM.',true)}).catch(function(){showStatus('Copy was blocked in this browser. Use Download .txt instead.',false)})});
   document.getElementById('downloadBrief').addEventListener('click',function(){if(!valid())return;var blob=new Blob([briefText()],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='campaign-brief.txt';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);showStatus('Brief downloaded.',true)});
@@ -181,7 +171,11 @@
   ['creatorName','creatorEmail','creatorPlatform','creatorNiche','creatorAudience','creatorStats','creatorIdea'].forEach(function(id){document.getElementById(id).addEventListener('input',updatePitch)});
   function showCreatorStatus(message,isSuccess){creatorStatus.classList.toggle('success',!!isSuccess);creatorStatus.textContent=message}
   function setCreatorSending(sending){creatorSend.disabled=sending;creatorSend.textContent='';if(sending){var spinner=document.createElement('span');spinner.className='send-spinner';spinner.setAttribute('aria-hidden','true');creatorSend.appendChild(spinner);creatorSend.appendChild(document.createTextNode(' Sending profile…'))}else{creatorSend.appendChild(document.createTextNode('Send profile to MyViralReach'))}}
-  creatorForm.addEventListener('submit',function(event){event.preventDefault();if(!creatorForm.reportValidity())return;if(document.getElementById('creatorWebsite').value){showCreatorStatus('Thanks — your profile has been received.',true);creatorForm.reset();updatePitch();return}setCreatorSending(true);showCreatorStatus('Sending your creator profile…',false);var payload={name:creatorGet('creatorName'),email:creatorGet('creatorEmail'),_replyto:creatorGet('creatorEmail'),platform:creatorGet('creatorPlatform'),niche:creatorGet('creatorNiche'),audience:creatorGet('creatorAudience'),performance:creatorGet('creatorStats'),partnership_idea:creatorGet('creatorIdea'),pitch:creatorPitchText(),_subject:'New MyViralReach creator profile — '+creatorGet('creatorName'),_template:'table',_captcha:'false'};fetch('https://formsubmit.co/ajax/shivgarg597@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)}).then(function(response){if(!response.ok)throw new Error('Delivery request failed');return response.json()}).then(function(data){if(!(data&&((data.success===true)||(data.success==='true'))))throw new Error('Delivery was not confirmed');showCreatorStatus('Submission accepted by the email service. MyViralReach can contact you if a relevant next step appears.',true);creatorForm.reset();updatePitch()}).catch(function(){creatorStatus.classList.remove('success');creatorStatus.textContent='Email delivery could not be confirmed. ';var link=document.createElement('a');link.textContent='Open your email app instead.';link.href='mailto:shivgarg597@gmail.com?subject='+encodeURIComponent('Creator profile for MyViralReach')+'&body='+encodeURIComponent(creatorPitchText());creatorStatus.appendChild(link)}).then(function(){setCreatorSending(false)})});
+  creatorForm.addEventListener('submit',function(event){
+    if(!creatorForm.reportValidity()){event.preventDefault();return;}
+    if(document.getElementById('creatorWebsite').value){event.preventDefault();showCreatorStatus('Please leave the hidden spam-check field empty.',false);return;}
+    setCreatorSending(true);
+  });
   document.getElementById('copyPitch').addEventListener('click',function(){if(!creatorForm.reportValidity())return;navigator.clipboard.writeText(creatorPitchText()).then(function(){showCreatorStatus('Pitch copied.',true)}).catch(function(){showCreatorStatus('Copy was blocked in this browser. Use Download .txt instead.',false)})});
   document.getElementById('downloadPitch').addEventListener('click',function(){if(!creatorForm.reportValidity())return;var blob=new Blob([creatorPitchText()],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='creator-pitch.txt';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);showCreatorStatus('Pitch downloaded.',true)});
 
